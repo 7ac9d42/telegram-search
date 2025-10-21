@@ -14,4 +14,12 @@ export default defineConfig({
   optimizeDeps: {
     include: ['@tg-search/core', '@tg-search/common'],
   },
+
+  // FIXME
+  // resolve: {
+  //   alias: {
+  //     '@tg-search/common': resolve(import.meta.dirname, '../../packages/common/src'),
+  //     '@tg-search/core': resolve(import.meta.dirname, '../../packages/core/src'),
+  //   },
+  // },
 })

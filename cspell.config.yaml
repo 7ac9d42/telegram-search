@@ -5,6 +5,7 @@ dictionaries: []
 words:
   - airi
   - Attributify
+  - autocorrect
   - bumpp
   - bytea
   - crossws
@@ -30,6 +31,7 @@ words:
   - Megagroups
   - moeru
   - mtproxy
+  - nprogress
   - ofetch
   - oklch
   - ollama
@@ -42,7 +44,7 @@ words:
   - reka
   - Retriable
   - rolldown
-  - Shadcn
+  - shadcn
   - sonner
   - taze
   - tiktoken
@@ -56,6 +58,7 @@ words:
   - uuidv4
   - valibot
   - vectorlite
+  - virtua
   - vite
   - vitest
   - vueuse

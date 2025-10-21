@@ -1,7 +1,7 @@
 import type { CorePagination } from '@tg-search/common'
 import type { CoreMessage } from '@tg-search/core'
 
-import { defineStore } from 'pinia'
+import { acceptHMRUpdate, defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 import { useBridgeStore } from '../composables/useBridge'
@@ -66,6 +66,10 @@ export const useMessageStore = defineStore('message', () => {
   }
 
   async function pushMessages(messages: CoreMessage[]) {
+    if (!currentChatId.value) {
+      return
+    }
+
     const filteredMessages = messages.filter(msg => msg.chatId === currentChatId.value)
 
     const direction = determineMessageDirection(filteredMessages, messageWindow.value)
@@ -159,3 +163,7 @@ export const useMessageStore = defineStore('message', () => {
     loadMessageContext,
   }
 })
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useMessageStore, import.meta.hot))
+}

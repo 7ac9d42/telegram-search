@@ -1,7 +1,7 @@
 # ---------------------------------
 # --------- Builder Stage ---------
 # ---------------------------------
-FROM node:24-alpine AS builder
+FROM node:24.10.0-alpine AS builder
 
 WORKDIR /app
 
@@ -41,12 +41,12 @@ COPY --from=builder /app/apps/web/dist /usr/share/nginx/html
 # Copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 80
+EXPOSE 3333
 
 # ---------------------------------
 # --------- Runtime Stage ---------
 # ---------------------------------
-FROM node:24-alpine
+FROM node:24.10.0-alpine
 
 WORKDIR /app
 
@@ -91,7 +91,7 @@ ENV DATABASE_TYPE="pglite"
 ENV DATABASE_URL=""
 ENV TELEGRAM_API_ID="611335"
 ENV TELEGRAM_API_HASH="d524b414d21f4d37f08684c1df41ac9c"
-ENV EMBEDDING_API_KEY="sk-proj-1234567890"
+ENV EMBEDDING_API_KEY=""
 ENV EMBEDDING_BASE_URL="https://api.openai.com/v1"
 ENV PROXY_URL=""
 

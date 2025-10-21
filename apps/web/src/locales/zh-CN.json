@@ -52,11 +52,13 @@
   },
   "loginPromptBanner": {
     "login": "去登录",
-    "pleaseLoginToUseFullFeatures": "请先登录 Telegram 账号以使用完整功能"
+    "pleaseLoginToUseFullFeatures": "请先登录 Telegram 账号以使用完整功能",
+    "subtitle": "体验完整功能，开始您的 Telegram 搜索之旅"
   },
   "messages": {
     "copied": "已复制",
-    "copyMessageLink": "按下复制消息链接"
+    "copyMessageLink": "复制消息链接",
+    "openInChat": "在聊天中打开"
   },
   "search": {
     "noRelatedMessages": "没有找到相关消息",
@@ -67,7 +69,8 @@
   "searchDialog": {
     "noRelatedMessages": "没有找到相关消息",
     "searchMessages": "搜索消息...",
-    "searching": "搜索中..."
+    "searching": "搜索中...",
+    "startTyping": "开始输入以搜索"
   },
   "settings": {
     "apiBaseUrl": "API 基础 URL",
@@ -107,19 +110,31 @@
   },
   "sync": {
     "cancel": "取消",
+    "dismiss": "关闭",
     "incrementalSync": "增量同步",
     "noInProgressTask": "没有进行中的任务",
+    "resync": "重新同步",
+    "resyncDescription": "清空数据并重新同步所有消息",
     "selectChats": "选择聊天",
     "selectedChats": "已选择 {count} 个聊天",
     "startSync": "开始同步",
     "startSyncPrompt": "首次同步需要在 Telegram 客户端中授权 Data Export 数据导出，并且刷新页面之后再尝试一次。",
     "sync": "同步",
     "syncCompleted": "同步完成",
+    "syncFailed": "同步失败",
     "syncPrompt": "同步对话之后才能搜索全部的聊天记录",
     "syncing": "同步中..."
   },
   "virtualMessageList": {
     "scrolling": "滚动中..."
+  },
+  "errors": {
+    "floodWait": "请求过于频繁，请等待 {seconds} 秒后再试。",
+    "takeoutRequired": "需要数据导出授权。请在 Telegram 客户端中授权 Data Export 数据导出。",
+    "takeoutInitDelay": "Takeout 会话初始化延迟。请等待 {seconds} 秒。",
+    "rpcError": "{message} (错误代码: {code})",
+    "unknownError": "发生未知错误",
+    "taskAborted": "任务已取消"
   },
   "base": {
     "toaster": {

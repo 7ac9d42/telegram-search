@@ -8,7 +8,8 @@ import {
   presetWind3,
 } from 'unocss'
 import presetAnimations from 'unocss-preset-animations'
-import { presetShadcn } from 'unocss-preset-shadcn'
+import { presetScrollbar } from 'unocss-preset-scrollbar'
+import presetShadcn from 'unocss-preset-shadcn'
 
 export function sharedUnoConfig() {
   return defineConfig({
@@ -23,9 +24,6 @@ export function sharedUnoConfig() {
         },
       }),
       presetAnimations(),
-      presetShadcn({
-        color: 'blue',
-      }),
       presetChromatic({
         baseHue: 220.44,
         colors: {
@@ -33,18 +31,16 @@ export function sharedUnoConfig() {
           complementary: 180,
         },
       }),
+      presetScrollbar({
+        scrollbarWidth: '6px',
+        scrollbarHeight: '6px',
+        scrollbarTrackRadius: '4px',
+        scrollbarThumbRadius: '4px',
+      }),
+      presetShadcn({
+        color: 'blue',
+      }),
     ],
-    // Content extraction configuration for shadcn-vue
-    content: {
-      pipeline: {
-        include: [
-          // The default patterns
-          /\.(vue|svelte|[jt]sx|mdx?|astro|elm|php|phtml|html)($|\?)/,
-          // Include js/ts files for shadcn components
-          '(components|src|packages)/**/*.{js,ts}',
-        ],
-      },
-    },
   })
 }
 

@@ -10,6 +10,7 @@ import { useRoute } from 'vue-router'
 import { toast } from 'vue-sonner'
 
 import SearchDialog from '../../components/SearchDialog.vue'
+import Avatar from '../../components/ui/Avatar.vue'
 import { Button } from '../../components/ui/Button'
 import VirtualMessageList from '../../components/VirtualMessageList.vue'
 
@@ -203,9 +204,9 @@ watch(
 </script>
 
 <template>
-  <div class="relative h-full flex flex-col">
+  <div class="relative h-full flex flex-col bg-background">
     <!-- Debug Panel -->
-    <div v-if="debugMode" class="absolute right-4 top-24 w-1/4 flex flex-col justify-left gap-2 rounded-lg bg-neutral-200 p-2 text-sm text-gray-500 font-mono dark:bg-neutral-800">
+    <div v-if="debugMode" class="absolute right-4 top-24 z-10 w-1/4 flex flex-col justify-left gap-2 border rounded-lg bg-card p-2 text-sm text-muted-foreground font-mono shadow-lg">
       <span>
         Height: {{ windowHeight }} / Messages: {{ sortedMessageArray.length }}
       </span>
@@ -238,12 +239,26 @@ watch(
     </div>
 
     <!-- Chat Header -->
-    <div class="flex items-center justify-between border-b p-4 dark:border-gray-700">
-      <h2 class="text-xl text-gray-900 font-semibold dark:text-gray-100">
-        {{ [currentChat?.name, currentChat?.id].filter(Boolean).join(' @ ') }}
-      </h2>
+    <div class="flex items-center justify-between border-b bg-card/50 px-6 py-4 backdrop-blur-sm">
+      <div class="flex items-center gap-3">
+        <Avatar
+          class="h-10 w-10 flex items-center justify-center rounded-full bg-primary/10"
+          :name="currentChat?.name"
+          size="md"
+        />
+        <div>
+          <h2 class="text-lg font-semibold">
+            {{ currentChat?.name }}
+          </h2>
+          <p v-if="currentChat?.id" class="text-xs text-muted-foreground">
+            ID: {{ currentChat?.id }}
+          </p>
+        </div>
+      </div>
       <Button
         icon="i-lucide-search"
+        variant="ghost"
+        size="sm"
         data-search-button
         @click="isGlobalSearchOpen = !isGlobalSearchOpen"
       >
@@ -252,7 +267,7 @@ watch(
     </div>
 
     <!-- Messages Area with Virtual List -->
-    <div class="flex-1 overflow-hidden bg-white dark:bg-gray-900">
+    <div class="flex-1 overflow-hidden">
       <VirtualMessageList
         ref="virtualListRef"
         :messages="sortedMessageArray"
@@ -264,20 +279,44 @@ watch(
     </div>
 
     <!-- Message Input -->
-    <div class="border-t bg-white p-4 dark:border-gray-700 dark:bg-gray-800">
-      <div class="flex gap-2">
-        <input
-          v-model="messageInput"
-          type="text"
-          :placeholder="t('chat.typeAMessage')"
-          class="flex-1 border border-gray-300 rounded-lg bg-white p-2 text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary dark:placeholder:text-gray-400 dark:focus:ring-offset-gray-800"
-          @keyup.enter="sendMessage"
-        >
+    <div class="p-4 md:p-6">
+      <div class="mx-auto max-w-4xl flex items-end gap-3">
+        <!-- Input container with modern design -->
+        <div class="relative flex flex-1 items-center">
+          <div class="absolute left-4 flex items-center gap-2">
+            <button
+              class="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+              type="button"
+              title="Emoji"
+            >
+              <span class="i-lucide-smile h-4 w-4" />
+            </button>
+          </div>
+          <input
+            v-model="messageInput"
+            type="text"
+            :placeholder="t('chat.typeAMessage')"
+            class="h-14 w-full border-0 rounded-2xl bg-muted/50 px-4 py-4 pl-14 pr-14 text-base shadow-sm transition-all duration-200 focus:bg-muted placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            @keyup.enter="sendMessage"
+          >
+          <div class="absolute right-4 flex items-center gap-1">
+            <button
+              class="h-8 w-8 flex items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+              type="button"
+              title="Attachment"
+            >
+              <span class="i-lucide-paperclip h-4 w-4" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Send button with modern design -->
         <button
-          class="rounded-lg bg-blue-500 px-4 py-2 text-white transition-colors hover:bg-blue-600"
+          :disabled="!messageInput.trim()"
+          class="h-14 w-14 flex flex-shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg transition-all duration-200 hover:scale-105 disabled:cursor-not-allowed hover:bg-primary/90 disabled:opacity-50 hover:shadow-xl disabled:hover:scale-100 disabled:hover:bg-primary disabled:hover:shadow-lg"
           @click="sendMessage"
         >
-          {{ t('chat.send') }}
+          <span class="i-lucide-send h-5 w-5" />
         </button>
       </div>
     </div>
@@ -287,7 +326,6 @@ watch(
         ref="searchDialogRef"
         v-model:open="isGlobalSearchOpen"
         :chat-id="id.toString()"
-        class="absolute left-0 top-[20%] w-full"
       >
         <template #settings>
           <div class="flex items-center">

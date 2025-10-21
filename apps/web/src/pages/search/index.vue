@@ -11,7 +11,6 @@ import MessageList from '../../components/messages/MessageList.vue'
 const { t } = useI18n()
 
 const isLoading = ref(false)
-const showSettings = ref(false)
 
 const keyword = ref<string>('')
 const keywordDebounced = useDebounce(keyword, 1000)
@@ -45,31 +44,25 @@ watch(keywordDebounced, (newKeyword) => {
 
 <template>
   <div class="h-full flex flex-col">
-    <header class="flex items-center border-b border-b-neutral-200 p-4 px-4 dark:border-b-gray-700">
-      <div class="flex items-center gap-2">
-        <span class="text-lg text-gray-900 font-medium dark:text-gray-100">{{ t('search.search') }}</span>
+    <header class="flex items-center border-b bg-card/50 px-6 py-4 backdrop-blur-sm">
+      <div class="flex items-center gap-3">
+        <h1 class="text-lg font-semibold">
+          {{ t('search.search') }}
+        </h1>
       </div>
     </header>
 
     <!-- 搜索栏直接放在页面顶部 -->
     <div class="flex flex-col px-8 pt-8">
-      <div class="w-full flex items-center gap-2">
-        <input
-          v-model="keyword"
-          class="flex-1 border border-neutral-200 rounded-md bg-white px-4 py-2 text-gray-900 outline-none dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary dark:focus:ring-offset-gray-800"
-          :placeholder="t('search.searchMessages')"
-        >
-        <button
-          class="h-8 w-8 flex items-center justify-center rounded-md p-1 text-gray-900 hover:bg-neutral-100 dark:text-gray-100 dark:hover:bg-gray-700"
-          @click="showSettings = !showSettings"
-        >
-          <span class="i-lucide-chevron-down h-4 w-4 transition-transform" :class="{ 'rotate-180': showSettings }" />
-        </button>
-      </div>
-
-      <!-- 设置栏 -->
-      <div v-if="showSettings" class="py-3">
-        <slot name="settings" />
+      <div class="mx-auto max-w-4xl w-full flex items-center gap-2">
+        <div class="relative flex flex-1 items-center">
+          <span class="i-lucide-search absolute left-4 h-5 w-5 text-muted-foreground" />
+          <input
+            v-model="keyword"
+            class="h-12 w-full border rounded-xl bg-background px-4 py-3 pl-12 pr-4 text-sm shadow-sm transition-all duration-200 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring"
+            :placeholder="t('search.searchMessages')"
+          >
+        </div>
       </div>
     </div>
 
@@ -83,13 +76,13 @@ watch(keywordDebounced, (newKeyword) => {
         <MessageList :messages="searchResult" :keyword="keyword" />
       </template>
       <template v-else-if="isLoading">
-        <div class="flex flex-col items-center justify-center py-12 text-gray-500 opacity-70 dark:text-gray-400">
+        <div class="flex flex-col items-center justify-center py-12 text-muted-foreground opacity-70">
           <span class="i-lucide-loader-circle mb-2 animate-spin text-3xl" />
           <span>{{ t('search.searching') }}</span>
         </div>
       </template>
       <template v-else-if="searchResult.length === 0">
-        <div class="flex flex-col items-center justify-center py-12 text-gray-500 opacity-70 dark:text-gray-400">
+        <div class="flex flex-col items-center justify-center py-12 text-muted-foreground opacity-70">
           <span class="i-lucide-search mb-2 text-3xl" />
           <span>{{ t('search.noRelatedMessages') }}</span>
         </div>
